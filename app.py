@@ -221,7 +221,7 @@ if "selected_student_id" not in st.session_state:
 # SIDEBAR CONTROLS & NAVIGATION
 # ==========================================
 with st.sidebar:
-    st.image("figures\main.jfif", width=70)
+    st.image("figures/main_image.jfif", width=70)
     st.markdown("### **Navigation & Filters**")
     
     view_mode = st.radio(
@@ -333,7 +333,7 @@ if view_mode == "🏛️ Faculty Overview & Risk Cohorts":
     st.markdown("<br>", unsafe_allow_html=True)
     
     # Interactive Visualizations Section
-    col_chart1, col_chart2 = st.columns([1, 1.4])
+    _, col_chart1, _ = st.columns([1, 2, 1])
     
     with col_chart1:
         st.markdown("#### 🎯 **Cohort Risk Distribution**")
@@ -369,41 +369,6 @@ if view_mode == "🏛️ Faculty Overview & Risk Cohorts":
         )
         st.plotly_chart(fig_donut, use_container_width=True)
 
-    with col_chart2:
-        st.markdown("#### 📚 **High-Risk Rate by Degree Program**")
-        scored_df["Course_Name"] = scored_df["Course"].map(COURSE_MAPPING).fillna("Other Major")
-        course_risk = scored_df.groupby("Course_Name").apply(
-            lambda x: pd.Series({
-                "Total": len(x),
-                "High_Risk_Pct": (x["Dynamic_Risk_Level"] == "High Risk").sum() / len(x) * 100.0
-            })
-        ).reset_index().sort_values("High_Risk_Pct", ascending=True)
-        
-        fig_bar = px.bar(
-            course_risk.tail(8),
-            y="Course_Name",
-            x="High_Risk_Pct",
-            orientation='h',
-            text="High_Risk_Pct",
-            color="High_Risk_Pct",
-            color_continuous_scale=["#10B981", "#F59E0B", "#EF4444"]
-        )
-        fig_bar.update_traces(
-            texttemplate='%{text:.1f}%',
-            textposition='outside',
-            marker=dict(line=dict(color='#0F172A', width=1))
-        )
-        fig_bar.update_layout(
-            margin=dict(t=20, b=20, l=10, r=40),
-            height=300,
-            xaxis_title="High Risk Students (%)",
-            yaxis_title="",
-            coloraxis_showscale=False,
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#F8FAFC')
-        )
-        st.plotly_chart(fig_bar, use_container_width=True)
 
     # Search, Filter, and Cohort Roster Table
     st.markdown("---")
@@ -717,13 +682,13 @@ elif view_mode == "📝 New Student Assessment Form":
             displaced = st.selectbox("Displaced (Living away from home)?", options=["No", "Yes"])
         with col_d3:
             special_needs = st.selectbox("Special Educational Needs?", options=["No", "Yes"])
-            course_choice = st.selectbox("Degree Course", options=list(COURSE_MAPPING.values()))
+            course_choice = st.selectbox("Degree Course", options=list(dict.fromkeys(COURSE_MAPPING.values())))
             
         predict_btn = st.form_submit_button("🚀 Evaluate Dropout Risk", type="primary")
         
     if predict_btn:
         # Reverse map inputs to feature vector
-        course_code = next((k for k, v in COURSE_MAPPING.items() if v == course_choice), 9147)
+        course_code = next((k for k, v in COURSE_MAPPING.items() if v == course_choice), 9)
         
         input_dict = {
             "Curricular units 2nd sem (approved)": float(u2_approved),

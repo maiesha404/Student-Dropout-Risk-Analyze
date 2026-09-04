@@ -221,7 +221,7 @@ if "selected_student_id" not in st.session_state:
 # SIDEBAR CONTROLS & NAVIGATION
 # ==========================================
 with st.sidebar:
-    st.image("https://img.icons8.com/fluency/96/student-registration.png", width=64)
+    st.image("figures\The Role of Statistics Assignment Help Services for Students.jfif", width=70)
     st.markdown("### **Navigation & Filters**")
     
     view_mode = st.radio(
@@ -250,13 +250,7 @@ with st.sidebar:
         step=5, help="Students with Dropout Probability above this threshold are classified as High Risk."
     )
     
-    st.markdown("---")
-    st.markdown("""
-    <div class="ethics-box">
-        <b>⚖️ Responsible AI Notice</b><br>
-        Predictions represent estimated statistical risk based on historical academic and financial patterns. They are diagnostic aids for supportive intervention, not deterministic destiny.
-    </div>
-    """, unsafe_allow_html=True)
+
 
 # Re-calibrate risk levels if user adjusts sidebar thresholds
 current_low_max = low_thresh / 100.0
@@ -852,21 +846,21 @@ elif view_mode == "📊 Model Performance & Explainability":
     col_img1, col_img2 = st.columns(2)
     with col_img1:
         st.markdown("#### 🎯 **Normalized Confusion Matrix**")
-        if os.path.exists("reports/figures/05_confusion_matrix.png"):
-            st.image("reports/figures/05_confusion_matrix.png", use_container_width=True)
+        if os.path.exists("figures/05_confusion_matrix.png"):
+            st.image("figures/05_confusion_matrix.png", use_container_width=True)
         else:
             st.info("Confusion matrix figure will appear after pipeline execution.")
             
     with col_img2:
         st.markdown("#### 📈 **Multi-Class ROC Curves**")
-        if os.path.exists("reports/figures/06_roc_curves.png"):
-            st.image("reports/figures/06_roc_curves.png", use_container_width=True)
+        if os.path.exists("figures/06_roc_curves.png"):
+            st.image("figures/06_roc_curves.png", use_container_width=True)
         else:
             st.info("ROC curves figure will appear after pipeline execution.")
             
     st.markdown("---")
     st.markdown("#### 🌳 **Global Feature Importance Ranking**")
-    if os.path.exists("reports/figures/07_global_feature_importance.png"):
-        st.image("reports/figures/07_global_feature_importance.png", use_container_width=True)
+    if os.path.exists("figures/07_global_feature_importance.png"):
+        st.image("figures/07_global_feature_importance.png", use_container_width=True)
     else:
         st.info("Feature importance chart will appear after pipeline execution.")

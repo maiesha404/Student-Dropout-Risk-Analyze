@@ -221,7 +221,7 @@ if "selected_student_id" not in st.session_state:
 # SIDEBAR CONTROLS & NAVIGATION
 # ==========================================
 with st.sidebar:
-    st.image("figures\The Role of Statistics Assignment Help Services for Students.jfif", width=70)
+    st.image("figures\main.jfif", width=70)
     st.markdown("### **Navigation & Filters**")
     
     view_mode = st.radio(
